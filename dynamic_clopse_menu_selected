@@ -1,0 +1,34 @@
+$(function(){
+    var base = "http://localhost";
+    
+    var activeURL = window.location.pathname;
+    var urlArray = activeURL.split('/');
+    
+    var url = '';
+    for(var i = 1; i < (urlArray.length-1); i++){
+        url += '/'+ urlArray[i];
+    }
+    var baseURL = base+url;
+    /*2nd part*/
+    var lastMethod = urlArray[urlArray.length-1].split('_');
+    var secActiveLink = base+url+'/'+lastMethod[0];
+    var pathLast, secPathLast;
+    /*end 2nd part*/
+    $("ul.sidebar-menu li").each(function() {
+        var dataPath = $(this).find('a').attr('href');
+
+        pathLast = dataPath.split('_');
+        secPathLast = pathLast[0]+ '_' +pathLast[1];
+
+        if (dataPath.toLowerCase() == baseURL.toLowerCase()) {
+            $(this).addClass("active");
+            $(this).parent('ul').addClass('in').find('li').removeClass('collapse').attr('aria-expanded', 'true');
+            $(this).parent('ul').parent('ul').addClass('in').find('li').removeClass('collapse').attr('aria-expanded', 'true');
+        } else if(secActiveLink.toLowerCase() == secPathLast.toLowerCase()){
+            $(this).addClass("active");
+            $(this).parent('ul').addClass('in').find('li').removeClass('collapse').attr('aria-expanded', 'true');
+            $(this).parent('ul').parent('ul').addClass('in').find('li').removeClass('collapse').attr('aria-expanded', 'true');
+        }
+    });
+
+});
